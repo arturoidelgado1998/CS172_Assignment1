@@ -6,7 +6,7 @@ import zipfile
 doc_regex = re.compile("<DOC>.*?</DOC>", re.DOTALL)
 docno_regex = re.compile("<DOCNO>.*?</DOCNO>")
 text_regex = re.compile("<TEXT>.*?</TEXT>", re.DOTALL)
-token_regex = re.compile("(?:\w+)(?:\,\.?\w+)*")
+token_regex = re.compile("(?:\w+)(?:\.?\w+)*", re.DOTALL)
 
 with zipfile.ZipFile("ap89_collection_small.zip", 'r') as zip_ref:
     zip_ref.extractall()
@@ -38,14 +38,19 @@ for file in allfiles:
             #for word in text:
             #    if word in regex:
             #        text = text.replace(word , "")
-            text = text.replace("_","")
-            text = text.replace("`","")
-            t = token_regex.split(text)
-            t =text.split()
+
+            #This snippet is from Jorge
+            text = re.findall(token_regex, text)
+
+            #commented the rest out
+            #text = text.replace("_","")
+            #text = text.replace("`","")
+            #t = token_regex.split(text)
+            #t =text.split()
             #print(t)
-            for words in t:
-                if stopwords == words:
-                    t =t.remove(words)
+            #for words in t:
+            #    if stopwords == words:
+            #        t =t.remove(words)
             print(t)
 
             # step 2 - create tokens 
