@@ -31,16 +31,19 @@ for file in allfiles:
             text = "".join(re.findall(text_regex, document))\
                       .replace("<TEXT>", "").replace("</TEXT>", "")\
                       .replace("\n", " ")
+                      
 
             # step 1 - lower-case words, remove punctuation, remove stop-words, etc.
             text = text.lower()
             tokenization_list = []
-            text.replace('_','')
+            #removes the underscore here
+            newText = text.replace("_"," ")
+            
             #removing 
-            for word in re.finditer(token_regex,text):
+            for word in re.finditer(token_regex,newText):
                 begin = word.start()
                 end = word.end()
-                text_seperated = text[begin:end]
+                text_seperated = newText[begin:end]
                 tokenization_list.append(text_seperated)
                # if word in removing_punc:
                 #    text = text.replace(word , "")
@@ -55,7 +58,7 @@ for file in allfiles:
             #    if words in tokenization_list:
             #        tokenization_list.remove(words)
             tokenization_list = [i for i in tokenization_list if i not in stopword_list]
-            #tokenization_list.remove('_')
+            
 
             
     #print(stopword_list)
