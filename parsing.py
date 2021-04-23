@@ -35,6 +35,7 @@ for file in allfiles:
             # step 1 - lower-case words, remove punctuation, remove stop-words, etc.
             text = text.lower()
             tokenization_list = []
+            text.replace('_','')
             #removing 
             for word in re.finditer(token_regex,text):
                 begin = word.start()
