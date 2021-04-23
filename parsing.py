@@ -6,13 +6,13 @@ import zipfile
 doc_regex = re.compile("<DOC>.*?</DOC>", re.DOTALL)
 docno_regex = re.compile("<DOCNO>.*?</DOCNO>")
 text_regex = re.compile("<TEXT>.*?</TEXT>", re.DOTALL)
-token_regex = re.compile("(?:\w+)(?:\,\.?\w+)*")
+token_regex = re.compile("\w+([\,\.]\w+)*")
+#removing_punc = '''``!()[];:'",<>@#$%^&*_~'''
+stopwords_file = open('stopwords.txt', 'r')
+stopwords_line = stopwords_file.readlines()
 
 with zipfile.ZipFile("ap89_collection_small.zip", 'r') as zip_ref:
     zip_ref.extractall()
-
-with open("stopwords.txt","r") as f:
-    stopwords = f.split("\n")
     
 
 # Retrieve the names of all files to be indexed in folder ./ap89_collection_small of the current directory
@@ -34,20 +34,33 @@ for file in allfiles:
 
             # step 1 - lower-case words, remove punctuation, remove stop-words, etc.
             text = text.lower()
+            tokenization_list = []
+            #removing 
+            for word in re.finditer(token_regex,text):
+                begin = word.start()
+                end = word.end()
+                text_seperated = text[begin:end]
+                tokenization_list.append(text_seperated)
+               # if word in removing_punc:
+                #    text = text.replace(word , "")
+            #t = token_regex.sub('',text)
+            #cleaned_Text = t.split()
+            stopword_list = []
+            for line in stopwords_line:
+                stripped_word = line.rstrip("\n")
+                stopword_list.append(stripped_word)
+            
+            #for words in stopword_list:
+            #    if words in tokenization_list:
+            #        tokenization_list.remove(words)
+            tokenization_list = [i for i in tokenization_list if i not in stopword_list]
+            #tokenization_list.remove('_')
 
-            #for word in text:
-            #    if word in regex:
-            #        text = text.replace(word , "")
-            text = text.replace("_","")
-            text = text.replace("`","")
-            t = token_regex.split(text)
-            t =text.split()
-            #print(t)
-            for words in t:
-                if stopwords == words:
-                    t =t.remove(words)
-            print(t)
+            
+    #print(stopword_list)
+    print(tokenization_list)
 
+            #print(tokenization_list)
             # step 2 - create tokens 
             # step 3 - build index
             
