@@ -8,9 +8,15 @@ docno_regex = re.compile("<DOCNO>.*?</DOCNO>")
 text_regex = re.compile("<TEXT>.*?</TEXT>", re.DOTALL)
 token_regex = re.compile("\w+([\,\.]\w+)*")
 #removing_punc = '''``!()[];:'",<>@#$%^&*_~'''
+
+tuple_dictionary = {'term_ids':[],'doc_id':[],'position':[]}
+#opening and reading the files with stop words
 stopwords_file = open('stopwords.txt', 'r')
 stopwords_line = stopwords_file.readlines()
 
+#dictionary where all of the tuple will be kept by category
+
+doc_id_occurence = 0
 with zipfile.ZipFile("ap89_collection_small.zip", 'r') as zip_ref:
     zip_ref.extractall()
     
@@ -58,12 +64,26 @@ for file in allfiles:
             #    if words in tokenization_list:
             #        tokenization_list.remove(words)
             tokenization_list = [i for i in tokenization_list if i not in stopword_list]
+            term_id_list = []
+            position_count_list = []
+            position_count = 0
+            for words_stop in tokenization_list:
+                term_id_list.append(words_stop.encode())
+                position_count = position_count +1
+                position_count_list.append(position_count)
+                
+                
             
 
             
     #print(stopword_list)
-    print(tokenization_list)
+    #print(term_id_list)
+    doc_id_occurence = doc_id_occurence +1
+    
+    for i in range(0,len(term_id_list)): 
+        tuple_dictionary['termid,docid,position'].append([term_id_list[i],doc_id_occurence,position_count_list[i]])
 
+    print(tuple_dictionary.items())
             #print(tokenization_list)
             # step 2 - create tokens 
             # step 3 - build index
