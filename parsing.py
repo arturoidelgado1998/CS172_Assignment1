@@ -26,12 +26,12 @@ with zipfile.ZipFile("ap89_collection_small.zip", 'r') as zip_ref:
 for dir_path, dir_names, file_names in os.walk("ap89_collection_small"):
     allfiles = [os.path.join(dir_path, filename).replace("\\", "/") for filename in file_names if (filename != "readme" and filename != ".DS_Store")]
     
-for file in allfiles[:4]:
+for file in allfiles[0:]:
     with open(file, 'r', encoding='ISO-8859-1') as f:
         filedata = f.read()
         result = re.findall(doc_regex, filedata)  # Match the <DOC> tags and fetch documents
 
-        for document in result[:2]:
+        for document in result[0:]:
             # Retrieve contents of DOCNO tag
             docno = re.findall(docno_regex, document)[0].replace("<DOCNO>", "").replace("</DOCNO>", "").strip()
             # Retrieve contents of TEXT tag
@@ -67,17 +67,18 @@ for file in allfiles[:4]:
             tokenization_list = [i for i in tokenization_list if i not in stopword_list]
             term_id_list = []
             position_count_list = []
-            position_count = 0
+            position_count = 1
             for words_stop in tokenization_list:
+                term_id_list.append(words_stop.encode())
                 position_count = position_count +1
                 position_count_list.append(position_count)
 
             for i in range(0,len(tokenization_list)):
                 if(tokenization_list[i] in tuple_dictionary):
-                    tuple_dictionary[tokenization_list[i]].append([(term_id,doc_id_occurence,position_count_list[i])])
+                    tuple_dictionary[tokenization_list[i]].append((term_id_list[i],doc_id_occurence,position_count_list[i]))
                 else:
-                    tuple_dictionary[tokenization_list[i]] = [(term_id,doc_id_occurence,position_count_list[i])]
-                    term_id = term_id + 1
+                    tuple_dictionary[tokenization_list[i]] = [(term_id_list[i],doc_id_occurence,position_count_list[i])]
+                    
             
                 
                 
@@ -88,8 +89,18 @@ for file in allfiles[:4]:
     #print(term_id_list)
             doc_id_occurence = doc_id_occurence +1
 
-    print(tuple_dictionary['state'])
-            #print(tokenization_list)
-            # step 2 - create tokens 
+print(tuple_dictionary['asparagus'])
+print("Total:" ,len(tuple_dictionary['asparagus']))
+counter2 = 0
+for tuple_shown in tuple_dictionary['asparagus']:
+    if tuple_shown[1] == counter2:
+        counter2 = counter2 +1
+    
+
+print(counter2)
+        
+
+
+            
             # step 3 - build index
             
