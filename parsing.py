@@ -9,14 +9,15 @@ text_regex = re.compile("<TEXT>.*?</TEXT>", re.DOTALL)
 token_regex = re.compile("\w+([\,\.]\w+)*")
 #removing_punc = '''``!()[];:'",<>@#$%^&*_~'''
 
-tuple_dictionary = {'term_ids':[],'doc_id':[],'position':[]}
+tuple_dictionary = {}
 #opening and reading the files with stop words
 stopwords_file = open('stopwords.txt', 'r')
 stopwords_line = stopwords_file.readlines()
 
 #dictionary where all of the tuple will be kept by category
 
-doc_id_occurence = 0
+doc_id_occurence = 1
+term_id = 0
 with zipfile.ZipFile("ap89_collection_small.zip", 'r') as zip_ref:
     zip_ref.extractall()
     
@@ -25,12 +26,12 @@ with zipfile.ZipFile("ap89_collection_small.zip", 'r') as zip_ref:
 for dir_path, dir_names, file_names in os.walk("ap89_collection_small"):
     allfiles = [os.path.join(dir_path, filename).replace("\\", "/") for filename in file_names if (filename != "readme" and filename != ".DS_Store")]
     
-for file in allfiles:
+for file in allfiles[:4]:
     with open(file, 'r', encoding='ISO-8859-1') as f:
         filedata = f.read()
         result = re.findall(doc_regex, filedata)  # Match the <DOC> tags and fetch documents
 
-        for document in result[0:]:
+        for document in result[:2]:
             # Retrieve contents of DOCNO tag
             docno = re.findall(docno_regex, document)[0].replace("<DOCNO>", "").replace("</DOCNO>", "").strip()
             # Retrieve contents of TEXT tag
@@ -68,9 +69,16 @@ for file in allfiles:
             position_count_list = []
             position_count = 0
             for words_stop in tokenization_list:
-                term_id_list.append(words_stop.encode())
                 position_count = position_count +1
                 position_count_list.append(position_count)
+
+            for i in range(0,len(tokenization_list)):
+                if(tokenization_list[i] in tuple_dictionary):
+                    tuple_dictionary[tokenization_list[i]].append([(term_id,doc_id_occurence,position_count_list[i])])
+                else:
+                    tuple_dictionary[tokenization_list[i]] = [(term_id,doc_id_occurence,position_count_list[i])]
+                    term_id = term_id + 1
+            
                 
                 
             
@@ -78,12 +86,9 @@ for file in allfiles:
             
     #print(stopword_list)
     #print(term_id_list)
-    doc_id_occurence = doc_id_occurence +1
-    
-    for i in range(0,len(term_id_list)): 
-        tuple_dictionary['termid,docid,position'].append([term_id_list[i],doc_id_occurence,position_count_list[i]])
+            doc_id_occurence = doc_id_occurence +1
 
-    print(tuple_dictionary.items())
+    print(tuple_dictionary['state'])
             #print(tokenization_list)
             # step 2 - create tokens 
             # step 3 - build index
