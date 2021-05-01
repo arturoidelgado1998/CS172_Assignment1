@@ -10,6 +10,7 @@ token_regex = re.compile("\w+([\,\.]\w+)*")
 #removing_punc = '''``!()[];:'",<>@#$%^&*_~'''
 
 tuple_dictionary = {}
+doc_dictionary = {}
 #opening and reading the files with stop words
 stopwords_file = open('stopwords.txt', 'r')
 stopwords_line = stopwords_file.readlines()
@@ -26,14 +27,15 @@ with zipfile.ZipFile("ap89_collection_small.zip", 'r') as zip_ref:
 for dir_path, dir_names, file_names in os.walk("ap89_collection_small"):
     allfiles = [os.path.join(dir_path, filename).replace("\\", "/") for filename in file_names if (filename != "readme" and filename != ".DS_Store")]
     
-for file in allfiles[0:]:
+for file in allfiles[:1]:
     with open(file, 'r', encoding='ISO-8859-1') as f:
         filedata = f.read()
         result = re.findall(doc_regex, filedata)  # Match the <DOC> tags and fetch documents
 
-        for document in result[0:]:
+        for document in result[:1]:
             # Retrieve contents of DOCNO tag
             docno = re.findall(docno_regex, document)[0].replace("<DOCNO>", "").replace("</DOCNO>", "").strip()
+            print(docno)
             # Retrieve contents of TEXT tag
             text = "".join(re.findall(text_regex, document))\
                       .replace("<TEXT>", "").replace("</TEXT>", "")\
@@ -76,23 +78,30 @@ for file in allfiles[0:]:
             for i in range(0,len(tokenization_list)):
                 if(tokenization_list[i] in tuple_dictionary):
                     tuple_dictionary[tokenization_list[i]].append((term_id_list[i],doc_id_occurence,position_count_list[i]))
-                else:
+                elif(tokenization_list[i] not in tuple_dictionary):
                     tuple_dictionary[tokenization_list[i]] = [(term_id_list[i],doc_id_occurence,position_count_list[i])]
-                    
+
+            if(docno in doc_dictionary):
+                doc_dictionary[docno].append((doc_id_occurence,position_count_list[-1]))
             
-                
-                
+            else:
+                doc_dictionary[docno] = [(doc_id_occurence,position_count_list[-1])]
             
 
             
     #print(stopword_list)
     #print(term_id_list)
             doc_id_occurence = doc_id_occurence +1
+print(doc_dictionary['AP890101-0001'])
+print("Listing for document: " ,'AP890101-0001' )
+for docid in doc_dictionary['AP890101-0001']:
+    print("DOCID: " ,docid[0])
+    print("Total Terms: ", docid[1])
 
-print(tuple_dictionary['asparagus'])
-print("Total:" ,len(tuple_dictionary['asparagus']))
+print(tuple_dictionary['state'])
+print("Total:" ,len(tuple_dictionary['state']))
 counter2 = 0
-for tuple_shown in tuple_dictionary['asparagus']:
+for tuple_shown in tuple_dictionary['state']:
     if tuple_shown[1] == counter2:
         counter2 = counter2 +1
     
