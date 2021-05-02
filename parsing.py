@@ -15,6 +15,12 @@ def result(command):# Regular expressions to extract data from the corpus
     stopwords_file = open('stopwords.txt', 'r')
     stopwords_line = stopwords_file.readlines()
 
+    stopword_list = []
+    for line in stopwords_line:
+        stripped_word = line.rstrip("\n")
+        #add the stop word to list
+        stopword_list.append(stripped_word)
+    #print(stopword_list)
     #dictionary where all of the tuple will be kept by category
 
     doc_id_occurence = 1
@@ -60,11 +66,6 @@ def result(command):# Regular expressions to extract data from the corpus
                 #cleaned_Text = t.split()
 
                 #the for loop stops each line and only grabs the word.
-                stopword_list = []
-                for line in stopwords_line:
-                    stripped_word = line.rstrip("\n")
-                    #add the stop word to list
-                    stopword_list.append(stripped_word)
                 
                 #for words in stopword_list:
                 #    if words in tokenization_list:
