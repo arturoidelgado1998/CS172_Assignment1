@@ -116,7 +116,7 @@ def result(command):# Regular expressions to extract data from the corpus
                 Doc_cont_terms.append(tuple_shown[1])
         print("Number of documents containing term: " ,counter2)
         
-    if("--term" == command[1] and "--doc" == command[3] ):
+    if("--term" == command[1] and "--doc" in command ):
         print("Inverted list for term:", command[2])
         print("In document: " , command[4])
         first_value2 = []
