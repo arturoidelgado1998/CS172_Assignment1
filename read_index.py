@@ -4,6 +4,4 @@ import sys
 
 command = list(sys.argv)
 
-if "--doc" in command:
-    #print(command[2])
-    parsing.result(command[2])
+parsing.result(command)

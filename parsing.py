@@ -95,18 +95,48 @@ def result(command):# Regular expressions to extract data from the corpus
         #print(term_id_list)
                 doc_id_occurence = doc_id_occurence +1
     #print(doc_dictionary[command])
-    print("Listing for document: ",command)
-    for docid in doc_dictionary[command]:
-        print("DOCID: ",docid[0])
-        print("Total Terms: ", docid[1])
+    if("--doc" == command[1]):
+        print("Listing for document: ",command[2])
+        for docid in doc_dictionary[command[2]]:
+            print("DOCID: ",docid[0])
+            print("Total Terms: ", docid[1])
 
-    #print(tuple_dictionary[command])
-    #print("Total:" ,len(tuple_dictionary['command']))
-    #counter2 = 0
-    #for tuple_shown in tuple_dictionary['state']:
-    #    if tuple_shown[1] == counter2:
-    #        counter2 = counter2 +1
+    if("--term" == command[1] and "--doc" not in command):
+        print("listing for term: ", command[2])
+        first_value = []
+        for tuple_shows in tuple_dictionary[command[2]]:
+            first_value.append(tuple_shows[0])
+        print("TERMID:" ,first_value[0])
+        print("Total:" ,len(tuple_dictionary[command[2]]))
+        counter2 = 0
+        Doc_cont_terms = []
+        for tuple_shown in tuple_dictionary[command[2]]:
+            if tuple_shown[1] not in Doc_cont_terms:
+                counter2 += 1
+                Doc_cont_terms.append(tuple_shown[1])
+        print("Number of documents containing term: " ,counter2)
         
+    if("--term" == command[1] and "--doc" == command[3] ):
+        print("Inverted list for term:", command[2])
+        print("In document: " , command[4])
+        first_value2 = []
+        term_freq_count = 0
+        for docid in doc_dictionary[command[4]]:
+            doc_id_number = docid[0]
+            #print(doc_id_number)
+        position_intuple = []
+        for tuple_shown in tuple_dictionary[command[2]]:
+            #print(tuple_shown[1])
+            if (tuple_shown[1]  == doc_id_number):
+                term_freq_count += 1
+                position_intuple.append(tuple_shown[2])
+            first_value2.append(tuple_shown[0])    
+        print("TERMID:" ,first_value2[0])
+        print("DOCID: ",doc_id_number)
+        print("Term frequency in document: ", term_freq_count)
+        print("Positions: ", position_intuple)
+            
+
 
     #print(counter2)
         
