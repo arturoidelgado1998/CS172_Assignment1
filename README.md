@@ -13,7 +13,8 @@ In the first step we lower-case the words, remove the puncuation, and stop-words
 
 The second step we create the index of our total occurence of each term and their corresponding document ID. Each term, its info and document's ID are mapped and printed when their command is entered. The third step prints the inverted index of each term, document and its position in each file.
 
-To run the program for example use: 
+The file *read_index.py* will call the program using `list(sys.argv)` and will call the result from *parsing.py*
+To run the program, for example, use: 
 
 `py .\read_index.py --term human --doc AP890321-0001`
 
