@@ -11,5 +11,11 @@ We are provided with code that retireves all the names of the files that are nee
 
 In the first step we lower-case the words, remove the puncuation, and stop-words and anything irrevalent in our search. Here we create a tokenized list of the cleaned-up word list and iterate through then and add them into the tuple dictionary. 
 
-The second step we create the index of our total occurence of each term and their corresponding document ID.
+The second step we create the index of our total occurence of each term and their corresponding document ID. Each term, its info and document's ID are mapped and printed when their command is entered. The third step prints the inverted index of each term, document and its position in each file.
+
+To run the program for example use: 
+
+`py .\read_index.py --term human --doc AP890321-0001`
+
+This will bring up the inverted list for the term 'human', the document in which it appears in this case 'AP890321-0001', the TERMID 'human', the DOCID: 19049, ther term frequency in the document, and the positions of the term.
 
