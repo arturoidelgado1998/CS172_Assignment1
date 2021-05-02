@@ -16,6 +16,7 @@ The second step we create the index of our total occurence of each term and thei
 The third step prints the inverted index of each term, document and its position in each file. From the file *read_index.py* we create a list of "command" which goes through our *parsing.py* It will check if the inputs are correctly called such as "--doc" and "--term" and grab the tuples from the `tuple_dictionary`, if correct, the corresponding IDs from term and document are grabbed.
 
 The file *read_index.py* will call the program using `list(sys.argv)` and will call the result from *parsing.py*
+
 To run the program, for example, use: 
 
 `py .\read_index.py --term human --doc AP890321-0001`
