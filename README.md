@@ -21,5 +21,5 @@ To run the program, for example, use:
 
 `py .\read_index.py --term human --doc AP890321-0001`
 
-This will bring up the inverted list for the term 'human', the document in which it appears in this case 'AP890321-0001', the TERMID 'human', the DOCID: 19049, ther term frequency in the document, and the positions of the term.
+This will bring up the inverted list for the term 'human', the document in which it appears in this case 'AP890321-0001', the TERMID 'human', the DOCID: 19049, the term frequency in the document, and the positions of the term.
 
