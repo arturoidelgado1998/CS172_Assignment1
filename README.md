@@ -35,7 +35,7 @@ To run the program to list the document only use:
 
 This will return the `DOCID` and the total number of terms contained in the document.
 
-#Extra Credit:
+## Extra Credit:
 
 Created `docids.txt` where we wrote a text file containing the document file's unique integer
 
