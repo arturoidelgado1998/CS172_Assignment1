@@ -33,4 +33,4 @@ To run the program to list the document only use:
 
 `py .\read_index.py --doc AP890321-0001`
 
-This will return the `DOCID` and the total number of turns contained in the document.
+This will return the `DOCID` and the total number of terms contained in the document.
