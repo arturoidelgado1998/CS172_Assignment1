@@ -1,10 +1,6 @@
 import re
 import os
 import zipfile
-import sys
-import os.path
-from os import path
-
 
 def result(command):# Regular expressions to extract data from the corpus
     doc_regex = re.compile("<DOC>.*?</DOC>", re.DOTALL)
@@ -15,12 +11,6 @@ def result(command):# Regular expressions to extract data from the corpus
 
     tuple_dictionary = {}
     doc_dictionary = {}
-    doc_name = []
-    doc_id_occurence_list = []
-    total_of_occurances_list = []
-    line_size = []
-    full_term_id_list = []
-    full_tokenization_list = []
     #opening and reading the files with stop words
     stopwords_file = open('stopwords.txt', 'r')
     stopwords_line = stopwords_file.readlines()
@@ -63,8 +53,6 @@ def result(command):# Regular expressions to extract data from the corpus
                 tokenization_list = []
                 #removes the underscore here
                 newText = text.replace("_"," ")
-
-
                 
                 #Using the finditer to implement the regex. Finds the start of each word that fits and end. adds it to tokenization list
                 for word in re.finditer(token_regex,newText):
@@ -86,20 +74,14 @@ def result(command):# Regular expressions to extract data from the corpus
                 #makes a new tokenization list which compares the stopwords with the old tokenization list and removes stop words
                 tokenization_list = [i for i in tokenization_list if i not in stopword_list]
                 
-                for i in tokenization_list:
-                    if i not in full_tokenization_list:
-                        full_tokenization_list.append(i)
-                        full_term_id_list.append((i.encode('utf-8').hex()))
-
                 term_id_list = []
                 position_count_list = []
                 position_count = 1
                 #makes a term id list by encoding it into binary of each word is the term_id
                 for words_stop in tokenization_list:
-                    term_id_list.append((words_stop.encode('utf-8').hex()))
+                    term_id_list.append(words_stop.encode('utf-8').hex())
                     position_count_list.append(position_count)
                     position_count = position_count +1
-
 
                 #for loop that runs from 0 to the size of the tokenization list
                 for i in range(0,len(tokenization_list)):
@@ -110,8 +92,6 @@ def result(command):# Regular expressions to extract data from the corpus
                         #if its not then it adds the key with its first value which is the term id , doc id and position of the word
                         tuple_dictionary[tokenization_list[i]] = [(term_id_list[i],doc_id_occurence,position_count_list[i])]
 
-            
-                doc_name.append(docno)
                 #same as the loop above excepts adds the doc_id and number of words in the document
                 if(docno in doc_dictionary):
                     doc_dictionary[docno].append((doc_id_occurence,position_count_list[-1]))
@@ -121,53 +101,14 @@ def result(command):# Regular expressions to extract data from the corpus
                         #adds the first key with values
                         doc_dictionary[docno] = [(doc_id_occurence,position_count_list[-1])]
                 
+
                 
         #print(stopword_list)
         #print(term_id_list)
-                doc_id_occurence_list.append(doc_id_occurence)
                 doc_id_occurence = doc_id_occurence +1
-    #
-    # print(doc_dictionary[command])
-    
-    f = open("docids.txt", "w")
-    for i in range(0,len(doc_name)):
-        f.write(str(doc_id_occurence_list[i]) + "\t"+ doc_name[i].lower() + "\n") 
-    f.close()
-
-      
-    f = open("termids.txt", "w")
-    for i in range(0,len(full_tokenization_list)):
-        f.write(str(full_term_id_list[i]) + "\t"+ full_tokenization_list[i] + "\n")
-        #f.write(tokenization_list[i] + "\n")
-    f.close() 
-
-    s = open("term_index.txt", "w")
-    trigger = 0
-    for i,j in tuple_dictionary.items():
-        total_occurance_counter = 0
-        for k in j:
-            if trigger == 0:
-                s.write(str(k[0]))
-                trigger = 1
-            else:
-                s.write("\t")
-                s.write(str(k[1]) + ":" + str(k[2]))
-            total_occurance_counter = total_occurance_counter +1
-        total_of_occurances_list.append(total_occurance_counter)
-        s.write("\n")
-    s.close()
-    
-
-    #print(total_of_occurances_list)
-    f = open("term_info.txt","w")
-    
-    with open("term_index.txt", "r") as term_index_file:
-        for line in term_index_file:
-            line_size.append(sys.getsizeof(line))
-
+    #print(doc_dictionary[command])
 
     #if the command has --doc at position one then it will run
-        #print(doc_id_occurence_list)
     if("--doc" == command[1]):
         #command is broken down into a list of command that was inputted EX: [".\read_index.py", "--term", "human", "--doc", "AP890321-0001"]
         #print command at 2 which should be the DOCNAME
