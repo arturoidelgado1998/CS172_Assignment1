@@ -23,3 +23,14 @@ To run the program, for example, use:
 
 This will bring up the inverted list for the term 'human', the document in which it appears, in this case, 'AP890321-0001', the TERMID 'human', the DOCID: 19049, the term frequency in the document, and the positions of the term.
 
+To run the program to list the term only use:
+
+`py .\read_index.py --term human`
+
+This will return the `TERMID`, the total number of times it has appeared througout the documents, and the number of total documents containing the term.
+
+To run the program to list the document only use:
+
+`py .\read_index.py --doc AP890321-0001`
+
+This will return the `DOCID` and the total number of turns contained in the document.
