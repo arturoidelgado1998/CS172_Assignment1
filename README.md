@@ -3,7 +3,7 @@
 ## Arturo Delgado, SID: 862099387
 ## Mario Aguirre, SID: 862079802
 
-This is part one of a multiple part project of a basic information retrieval system. The language used for the program is Python. The extra credit was also attempted.
+This is part one of a multiple part project of a basic information retrieval system. The language used for the program is `Python`. The extra credit was also attempted.
 
 The file, `parsing.py`, contains the majority of code. First we use a regex to remove puncuation and handle white-space in order to tokenize words from a list of documents.
 A *stopword.txt* was provided with a list of stop words that are either removed or ignored from the index. In order to handle our tokenization we create a tuple dictionary function and a document dictionary function where all the tuples are kept by category. 
