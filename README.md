@@ -3,7 +3,7 @@
 ## Arturo Delgado, SID: 862099387
 ## Mario Aguirre, SID: 862079802
 
-This is part one of a multiple part project of a basic information retrieval system. The language used for the program is Python.
+This is part one of a multiple part project of a basic information retrieval system. The language used for the program is Python. The extra credit was also attempted.
 
 The file, *parsing.py*, contains the majority of code. First we use a regex to remove puncuation and handle white-space in order to tokenize words from a list of documents.
 A *stopword.txt* was provided with a list of stop words that are either removed or ignored from the index. In order to handle our tokenization we create a tuple dictionary function and a document dictionary function where all the tuples are kept by category. 
@@ -34,3 +34,9 @@ To run the program to list the document only use:
 `py .\read_index.py --doc AP890321-0001`
 
 This will return the `DOCID` and the total number of terms contained in the document.
+
+#Extra Credit:
+
+Created `docids.txt` where we wrote a text file containing the document file's unique integer
+
+Created `termids.txt` where we wrote a text file containing the TERMID's unique integer
