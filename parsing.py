@@ -80,8 +80,8 @@ def result(command):# Regular expressions to extract data from the corpus
                 #makes a term id list by encoding it into binary of each word is the term_id
                 for words_stop in tokenization_list:
                     term_id_list.append(words_stop.encode())
-                    position_count = position_count +1
                     position_count_list.append(position_count)
+                    position_count = position_count +1
 
                 #for loop that runs from 0 to the size of the tokenization list
                 for i in range(0,len(tokenization_list)):
@@ -136,7 +136,7 @@ def result(command):# Regular expressions to extract data from the corpus
         counter2 = 0
         Doc_cont_terms = []
         for tuple_shown in tuple_dictionary[command[2]]:
-            #if doc id is not in the tuple then it increments and adds it else it goes to the next one
+            #if doc id is not in the tuple then it increments and adds it else it goes to the next one (term id, doc id , position)
             if tuple_shown[1] not in Doc_cont_terms:
                 counter2 += 1
                 Doc_cont_terms.append(tuple_shown[1])
