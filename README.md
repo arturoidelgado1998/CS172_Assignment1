@@ -37,6 +37,8 @@ This will return the `DOCID` and the total number of terms contained in the docu
 
 ## Extra Credit:
 
-Created `docids.txt` where we wrote a text file containing the document file's unique integer
+Created `docids.txt` where we wrote a text file containing the document file's unique integer.
 
-Created `termids.txt` where we wrote a text file containing the TERMID's unique integer
+Created `termids.txt` where we wrote a text file containing the TERMID's unique integer.
+
+Created a function for `term_index.txt` which creates an inverted index file containing the position of each term and its unique integer.
