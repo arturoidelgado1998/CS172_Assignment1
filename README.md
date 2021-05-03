@@ -5,7 +5,7 @@
 
 This is part one of a multiple part project of a basic information retrieval system. The language used for the program is Python. The extra credit was also attempted.
 
-The file, *parsing.py*, contains the majority of code. First we use a regex to remove puncuation and handle white-space in order to tokenize words from a list of documents.
+The file, `parsing.py`, contains the majority of code. First we use a regex to remove puncuation and handle white-space in order to tokenize words from a list of documents.
 A *stopword.txt* was provided with a list of stop words that are either removed or ignored from the index. In order to handle our tokenization we create a tuple dictionary function and a document dictionary function where all the tuples are kept by category. 
 We are provided with code that retrieves all the names of the files that are needed to be indexed in the current dictionary.
 
@@ -15,7 +15,7 @@ The second step we create the index of our total occurence of each term and thei
 
 The third step prints the inverted index of each term, document, and its position in each file. From the file *read_index.py* we create a list of `command` which goes through our *parsing.py* It will check if the inputs are correctly called such as `--doc` and `--term` and grab the tuples from the `tuple_dictionary`, if correct, the corresponding IDs from term and document are grabbed.
 
-The file *read_index.py* will call the program using `list(sys.argv)` and will call the result from *parsing.py*
+The file `read_index.py` will call the program using `list(sys.argv)` and will call the result from `parsing.py`
 
 To run the program, for example, use: 
 
